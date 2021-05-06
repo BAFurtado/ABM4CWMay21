@@ -4,18 +4,14 @@ from .model import Simulation
 from .SimpleContinuousModule import SimpleCanvas
 
 
-def boid_draw(agent):
-    return {"Shape": "circle", "r": 2, "Filled": "true", "Color": "Red"}
+def farm_draw(agent):
+    return {"Shape": "square", "size": 2, "Filled": "true", "Color": "Red"}
 
 
-boid_canvas = SimpleCanvas(boid_draw, 500, 500)
+town_canvas = SimpleCanvas(farm_draw, 500, 500)
 model_params = {
     "population": 100,
     "width": 100,
-    "height": 100,
-    "speed": 5,
-    "vision": 10,
-    "separation": 2,
-}
+    "height": 100}
 
-server = ModularServer(Simulation, [boid_canvas], "Farmers", model_params)
+server = ModularServer(Simulation, [town_canvas], "Farmers", model_params)

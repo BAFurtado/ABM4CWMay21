@@ -1,6 +1,6 @@
 # ABM4CWMay21
 
-#### This is a GitHub repository to support a facilitated session at the Complexity Weekend May 21 event called:
+#### This is a GitHub repository to support a facilitated session at the [Complexity Weekend](http://www.complexityweekend.com) May 21 event called:
 
 # The simplest hands-on collective agent-based model: an exploratory experimentative proposal
 

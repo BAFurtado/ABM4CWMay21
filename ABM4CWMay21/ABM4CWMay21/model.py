@@ -19,37 +19,17 @@ class Simulation(Model):
     The simulation model itself. Handles agent creation, placement and scheduling.
     """
 
-    def __init__(
-        self,
-        population=100,
-        width=100,
-        height=100,
-        speed=1,
-        vision=10,
-        separation=2,
-        cohere=0.025,
-        separate=0.25,
-        match=0.04,
-    ):
+    def __init__(self, population=8000, width=100, height=100):
         """
-        Create a new Flockers model.
+        Create a new model.
 
         Args:
-            population: Number of Boids
+            population: Number of available land
             width, height: Size of the space.
-            speed: How fast should the Boids move.
-            vision: How far around should each Boid look for its neighbors
-            separation: What's the minimum distance each Boid will attempt to
-                    keep from any other
-            cohere, separate, match: factors for the relative importance of
-                    the three drives."""
+        """
         self.population = population
-        self.vision = vision
-        self.speed = speed
-        self.separation = separation
         self.schedule = RandomActivation(self)
         self.space = ContinuousSpace(width, height, True)
-        self.factors = dict(cohere=cohere, separate=separate, match=match)
         self.make_agents()
         self.running = True
 
@@ -57,23 +37,14 @@ class Simulation(Model):
         """
         Create self.population agents, with random positions and starting headings.
         """
+        # Get some positions on the grid
+        pos = np.array([(x, y) for x in range(0, 100) for y in range(0, 100)])
+        # Choose population from the grid
+        new_pos = pos[np.random.choice(pos.shape[0], self.population, replace=False), :]
         for i in range(self.population):
-            x = self.random.random() * self.space.x_max
-            y = self.random.random() * self.space.y_max
-            pos = np.array((x, y))
-            velocity = np.random.random(2) * 2 - 1
-            boid = Farmer(
-                i,
-                self,
-                pos,
-                self.speed,
-                velocity,
-                self.vision,
-                self.separation,
-                **self.factors
-            )
-            self.space.place_agent(boid, pos)
-            self.schedule.add(boid)
+            farmer = Farmer(i, self, new_pos[i])
+            self.space.place_agent(farmer, new_pos[i])
+            self.schedule.add(farmer)
 
     def step(self):
         self.schedule.step()
