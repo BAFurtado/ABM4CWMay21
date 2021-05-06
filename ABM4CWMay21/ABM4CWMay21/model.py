@@ -38,7 +38,7 @@ class Simulation(Model):
         Create self.population agents, with random positions and starting headings.
         """
         # Get some positions on the grid
-        pos = np.array([(x, y) for x in range(0, 100) for y in range(0, 100)])
+        pos = np.array([(x, y) for x in range(0, self.space.width) for y in range(0, self.space.height)])
         # Choose population from the grid
         new_pos = pos[np.random.choice(pos.shape[0], self.population, replace=False), :]
         for i in range(self.population):

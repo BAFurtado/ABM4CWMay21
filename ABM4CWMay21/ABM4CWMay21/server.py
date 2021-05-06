@@ -5,12 +5,12 @@ from .SimpleContinuousModule import SimpleCanvas
 
 
 def farm_draw(agent):
-    return {"Shape": "square", "size": 2, "Filled": "true", "Color": "Red"}
+    return {"Shape": "circle", 'r': 2, "Filled": "true", "Color": "Red"}
 
 
 town_canvas = SimpleCanvas(farm_draw, 500, 500)
 model_params = {
-    "population": 100,
+    "population": 8000,
     "width": 100,
     "height": 100}
 
