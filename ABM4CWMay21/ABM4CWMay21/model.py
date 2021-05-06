@@ -19,7 +19,7 @@ class Simulation(Model):
     The simulation model itself. Handles agent creation, placement and scheduling.
     """
 
-    def __init__(self, population=8000, width=100, height=100, vision=2):
+    def __init__(self, population, width, height, vision, products):
         """
         Create a new model.
 
@@ -30,8 +30,9 @@ class Simulation(Model):
         super().__init__(self)
         self.population = population
         self.vision = vision
+        self.products = products
         self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(width, height, True)
+        self.space = ContinuousSpace(width, height, False)
         self.ids = 0
         self.make_agents()
         self.running = True
@@ -46,8 +47,11 @@ class Simulation(Model):
         pos = np.array([(x, y) for x in range(0, self.space.width) for y in range(0, self.space.height)])
         # Choose population from the grid
         new_pos = pos[np.random.choice(pos.shape[0], n, replace=False), :]
+        types = np.random.choice(list(self.products), size=n, p=[self.products[k]['size'] for k in self.products])
         for i in range(n):
-            farmer = Farmer(self.ids, self, new_pos[i])
+            farmer = Farmer(self.ids, self, new_pos[i], self.products[types[i]],
+                            self.products[types[i]]['productivity'],
+                            self.products[types[i]]['color'])
             self.space.place_agent(farmer, new_pos[i])
             self.schedule.add(farmer)
             self.ids += 1

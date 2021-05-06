@@ -21,7 +21,7 @@ class Farmer(Agent):
 
     """
 
-    def __init__(self, unique_id, model, pos, productivity=1):
+    def __init__(self, unique_id, model, pos, types, productivity, color):
         """
         Create a new farmer.
         Args:
@@ -33,14 +33,17 @@ class Farmer(Agent):
         self.model = model
         self.pos = np.array(pos)
         # Productivity is price at the market minus cost of production (positive)
+        self.types = types
         self.productivity = productivity
+        self.color = color
 
     def get_empties(self, neighbors):
         occupied_pos = [(n.pos[0], n.pos[1]) for n in neighbors]
         empties = list()
         for x in range(self.pos[0] - self.model.vision, self.pos[0] + self.model.vision):
             for y in range(self.pos[1] - self.model.vision, self.pos[1] + self.model.vision):
-                if (x != self.pos[0]) and (y != self.pos[1]):
+                if (x != self.pos[0]) and (y != self.pos[1]) and (x > 0) and (y > 0) \
+                        and (x < self.model.space.x_max) and (y < self.model.space.y_max):
                     pos = self.model.space.torus_adj((x, y))
                     if pos not in occupied_pos:
                         empties.append(pos)
