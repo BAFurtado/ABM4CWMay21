@@ -44,7 +44,7 @@ class Farmer(Agent):
             for y in range(self.pos[1] - self.model.vision, self.pos[1] + self.model.vision):
                 if (x != self.pos[0]) and (y != self.pos[1]) and (x > 0) and (y > 0) \
                         and (x < self.model.space.x_max) and (y < self.model.space.y_max):
-                    pos = self.model.space.torus_adj((x, y))
+                    pos = x, y
                     if pos not in occupied_pos:
                         empties.append(pos)
         return empties
@@ -63,7 +63,7 @@ class Farmer(Agent):
         current = self.current_income()
         # If more profitable move
         if empties:
-            new_pos = max(empties, key=lambda f: self.productivity - self.model.space.get_distance(f, self.model.space.center))
+            new_pos = min(empties, key=lambda f: self.model.space.get_distance(f, self.model.space.center))
             new_income = self.productivity - self.model.space.get_distance(new_pos, self.model.space.center)
             if new_income > current:
                 self.model.market.append((self, new_pos, new_income))

@@ -32,7 +32,7 @@ class Simulation(Model):
         self.vision = vision
         self.products = products
         self.schedule = RandomActivation(self)
-        self.space = ContinuousSpace(width, height, False)
+        self.space = ContinuousSpace(width, height, True)
         self.ids = 0
         self.make_agents()
         self.running = True
@@ -61,9 +61,12 @@ class Simulation(Model):
         # Agents steps
         self.schedule.step()
         # Bidding for empty places
-        on_the_market_land = set(x[1] for x in self.market)
+        on_the_market_land = list(set(x[1] for x in self.market))
+        on_the_market_land.sort(key=lambda l: self.space.get_distance(l, self.space.center))
         for empty in on_the_market_land:
             bidders = [b for b in self.market if b[1] == empty]
-            winner = max(bidders, key=lambda b: b[2])
-            self.space.move_agent(winner[0], winner[1])
+            if bidders:
+                winner = max(bidders, key=lambda b: b[2])
+                self.space.move_agent(winner[0], winner[1])
+                self.market.remove((winner[0], winner[1], winner[2]))
         self.market = list()
