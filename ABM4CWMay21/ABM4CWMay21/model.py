@@ -36,6 +36,7 @@ class Simulation(Model):
         self.ids = 0
         self.make_agents()
         self.running = True
+        self.market = list()
 
     def make_agents(self, n=None):
         """
@@ -57,4 +58,12 @@ class Simulation(Model):
             self.ids += 1
 
     def step(self):
+        # Agents steps
         self.schedule.step()
+        # Bidding for empty places
+        on_the_market_land = set(x[1] for x in self.market)
+        for empty in on_the_market_land:
+            bidders = [b for b in self.market if b[1] == empty]
+            winner = max(bidders, key=lambda b: b[2])
+            self.space.move_agent(winner[0], winner[1])
+        self.market = list()

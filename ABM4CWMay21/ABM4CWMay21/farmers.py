@@ -63,10 +63,10 @@ class Farmer(Agent):
         current = self.current_income()
         # If more profitable move
         if empties:
-            new_pos = max(empties, key=lambda f: self.productivity - self.model.space.get_distance(f, self.pos))
-            new_income = self.productivity - self.model.space.get_distance(new_pos, self.pos)
+            new_pos = max(empties, key=lambda f: self.productivity - self.model.space.get_distance(f, self.model.space.center))
+            new_income = self.productivity - self.model.space.get_distance(new_pos, self.model.space.center)
             if new_income > current:
-                self.model.space.move_agent(self, new_pos)
+                self.model.market.append((self, new_pos, new_income))
                 return
         if current > 0:
             return

@@ -5,9 +5,9 @@ from .SimpleContinuousModule import SimpleCanvas
 
 # Products: Name: productivity, size
 full_size = 10
-products = {'Dairy': {'productivity': 1, 'size': 1/10, 'color': 'Red'},
-            'Crops': {'productivity': 1/2, 'size': 2/10, 'color': 'Blue'},
-            'Grazing': {'productivity': 1/4, 'size': 1 - 3/10, 'color': 'Green'}}
+products = {'Dairy': {'productivity': 400, 'size': 1/10, 'color': 'Red'},
+            'Crops': {'productivity': 150, 'size': 2/10, 'color': 'Blue'},
+            'Grazing': {'productivity': 100, 'size': 1 - 3/10, 'color': 'Green'}}
 
 
 def farm_draw(agent):
@@ -16,7 +16,7 @@ def farm_draw(agent):
 
 town_canvas = SimpleCanvas(farm_draw, 500, 500)
 model_params = {
-    "population": 5000,
+    "population": 8000,
     "width": 100,
     "height": 100,
     'vision': 2,
