@@ -52,6 +52,7 @@ class Simulation(Model):
         for i in range(n):
             farmer = Farmer(self.ids, self, new_pos[i], self.products[types[i]],
                             self.products[types[i]]['productivity'],
+                            self.products[types[i]]['transport'],
                             self.products[types[i]]['color'])
             self.space.place_agent(farmer, new_pos[i])
             self.schedule.add(farmer)

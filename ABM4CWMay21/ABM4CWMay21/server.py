@@ -5,9 +5,9 @@ from .SimpleContinuousModule import SimpleCanvas
 
 # Products: Name: productivity, size
 full_size = 10
-products = {'Dairy': {'productivity': 150, 'size': 1/10, 'color': 'Red'},
-            'Crops': {'productivity': 100, 'size': 2/10, 'color': 'Blue'},
-            'Grazing': {'productivity': 70, 'size': 1 - 3/10, 'color': 'Green'}}
+products = {'Dairy': {'productivity': 300, 'size': 2/10, 'color': 'Red', 'transport': 1},
+            'Crops': {'productivity': 200, 'size': 3/10, 'color': 'Blue', 'transport': 2},
+            'Grazing': {'productivity': 150, 'size': 1 - 5/10, 'color': 'Green', 'transport': 3}}
 
 
 def farm_draw(agent):
@@ -16,10 +16,10 @@ def farm_draw(agent):
 
 town_canvas = SimpleCanvas(farm_draw, 500, 500)
 model_params = {
-    "population": 1000,
-    "width": 100,
-    "height": 100,
-    'vision': 2,
+    "population": 2000,
+    "width": 70,
+    "height": 70,
+    'vision': 7,
     'products': products}
 
 server = ModularServer(Simulation, [town_canvas], "Farmers", model_params)

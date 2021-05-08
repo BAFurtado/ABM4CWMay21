@@ -21,7 +21,7 @@ class Farmer(Agent):
 
     """
 
-    def __init__(self, unique_id, model, pos, types, productivity, color):
+    def __init__(self, unique_id, model, pos, types, productivity, transport, color):
         """
         Create a new farmer.
         Args:
@@ -35,6 +35,7 @@ class Farmer(Agent):
         # Productivity is price at the market minus cost of production (positive)
         self.types = types
         self.productivity = productivity
+        self.transport = transport
         self.color = color
 
     def get_empties(self, neighbors):
@@ -50,7 +51,7 @@ class Farmer(Agent):
         return empties
 
     def current_income(self):
-        return self.productivity - self.model.space.get_distance(self.pos, self.model.space.center)
+        return self.productivity - self.model.space.get_distance(self.pos, self.model.space.center) * self.transport
 
     def step(self):
         """
@@ -64,7 +65,7 @@ class Farmer(Agent):
         # If more profitable move
         if empties:
             new_pos = min(empties, key=lambda f: self.model.space.get_distance(f, self.model.space.center))
-            new_income = self.productivity - self.model.space.get_distance(new_pos, self.model.space.center)
+            new_income = self.productivity - self.model.space.get_distance(new_pos, self.model.space.center) * self.transport
             if new_income > current:
                 self.model.market.append((self, new_pos, new_income))
                 return
