@@ -11,6 +11,8 @@
 3. 
 4. 
 
+![alt text](ABM4CWMay21/ABM4CWMay21/Cover.png)
+
 Adapted from original 
 [mesa](https://github.com/projectmesa/mesa-examples/tree/master/examples/Flockers) example on Boids.
 
